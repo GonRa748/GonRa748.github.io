@@ -79,10 +79,11 @@
 
         .profile img {
             border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-            border: 2px solid #0056b3;
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border: 5px solid #0056b3;
+            padding: 5px;
         }
 
         .profile .info {
@@ -105,9 +106,16 @@
 
         .links a {
             text-decoration: none;
-            color: #0056b3;
-            margin-right: 15px;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
             font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .links a:hover {
+            background-color: #004080;
         }
 
         .section {
@@ -178,16 +186,17 @@
         .cv-download, .email-me {
             display: inline-block;
             margin-top: 10px;
-            background: #0073e6;
+            background: #0056b3;
             color: white;
             padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
+            transition: background 0.3s;
         }
 
         .cv-download:hover, .email-me:hover {
-            background: #0056b3;
+            background: #004080;
         }
     </style>
 </head>
@@ -217,8 +226,8 @@
             <h2>About Me</h2>
             <p>I am a responsible, adaptable, and highly motivated Cloud Computing student, eager to contribute my skills and knowledge in a professional setting.</p>
             <div class="links">
-                <a href="https://www.linkedin.com/in/rafael-gon%C3%A7alves-fernandes-180b5832b/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/GonRa748" target="_blank">GitHub</a>
+                <a href="mailto:GonRa748@school.lu" class="email-me">Email Me</a>
+                <a href="CV.pdf" class="cv-download" download>Download My CV</a>
             </div>
         </div>
     </div>
@@ -259,7 +268,7 @@
     <!-- Contact Section -->
     <div class="section" id="contact">
         <h2>Contact</h2>
-        <p>If you'd like to get in touch, feel free to reach out!</p>
+                <p>If you'd like to get in touch, feel free to reach out!</p>
         <div class="links">
             <a href="mailto:GonRa748@school.lu" class="email-me">Email Me</a>
             <a href="CV.pdf" class="cv-download" download>Download My CV</a>
