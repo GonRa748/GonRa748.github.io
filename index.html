@@ -52,27 +52,12 @@
         }
 
         .hero h1 {
-            font-size: 2.8em;
+            font-size: 3.5em;
         }
 
         .hero p {
-            font-size: 1.2em;
+            font-size: 1.5em;
             margin: 20px 0;
-        }
-
-        .hero a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: white;
-            color: #0056b3;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-
-        .hero a:hover {
-            background-color: #e6f0ff;
         }
 
         .container {
@@ -94,9 +79,9 @@
 
         .profile img {
             border-radius: 50%;
-            width: 180px;
-            height: 180px;
-            object-fit: cover;
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
             border: 2px solid #0056b3;
         }
 
@@ -130,7 +115,7 @@
         }
 
         .section h2 {
-            font-size: 2.2em;
+            font-size: 2.5em;
             margin-bottom: 20px;
             color: #0056b3;
         }
@@ -190,18 +175,19 @@
             color: white;
         }
 
-        .cv-download {
+        .cv-download, .email-me {
             display: inline-block;
             margin-top: 10px;
-            background: #ff5722;
+            background: #0073e6;
             color: white;
             padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
+            font-weight: bold;
         }
 
-        .cv-download:hover {
-            background: #e64a19;
+        .cv-download:hover, .email-me:hover {
+            background: #0056b3;
         }
     </style>
 </head>
@@ -220,7 +206,6 @@
 <section class="hero">
     <h1>Hello, I'm Rafael Goncalves Fernandes</h1>
     <p>A Cloud Computing Student passionate about technology and innovation.</p>
-    <a href="#contact">Hire Me</a>
 </section>
 
 <div class="container" id="about">
@@ -268,7 +253,6 @@
             <div class="skill">Effective Communication: Strong ability to convey information clearly and concisely.</div>
             <div class="skill">Technical Troubleshooting: Skilled in identifying and resolving technical issues.</div>
             <div class="skill">Problem Solving: Excellent analytical and decision-making abilities.</div>
-            <div class="skill">Attention to Detail: Meticulous and thorough in all tasks.</div>
         </div>
     </div>
 
@@ -277,8 +261,8 @@
         <h2>Contact</h2>
         <p>If you'd like to get in touch, feel free to reach out!</p>
         <div class="links">
-            <a href="mailto:GonRa748@school.lu">Email Me</a>
-            <a class="cv-download" href="CV.pdf" download>Download My CV</a>
+            <a href="mailto:GonRa748@school.lu" class="email-me">Email Me</a>
+            <a href="CV.pdf" class="cv-download" download>Download My CV</a>
         </div>
     </div>
 </div>
