@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta
         name="description"
@@ -20,69 +18,92 @@
 
     <title>Rafael Gonçalves Fernandes | Cloud Computing</title>
 
-    <!-- =========================
-         FONTS
-    ========================== -->
-
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <!-- =========================
-         ICONS
-    ========================== -->
-
+    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- =========================
-         CSS
-    ========================== -->
-
     <style>
 
-        /* =========================================
-           ROOT
-        ========================================= */
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
 
         :root {
+
+            /* BLACK MODE */
+
             --bg: #07090d;
-            --bg-soft: #0b0e13;
-            --bg-card: rgba(255, 255, 255, 0.035);
+            --bg-soft: #0c1016;
+            --bg-card: rgba(255,255,255,0.045);
 
-            --border: rgba(255, 255, 255, 0.09);
-            --border-hover: rgba(100, 220, 255, 0.35);
+            --border: rgba(255,255,255,0.12);
+            --border-hover: rgba(105,220,255,0.42);
 
-            --text: #f2f4f7;
-            --text-soft: #a1a7b3;
-            --text-muted: #656c78;
+            /* Brighter text for black mode */
+            --text: #f5f7fa;
+            --text-soft: #c0c6d0;
+            --text-muted: #9da6b5;
 
             --accent: #69dcff;
-            --accent-soft: rgba(105, 220, 255, 0.12);
+            --accent-soft: rgba(105,220,255,0.12);
 
             --green: #4ade80;
 
-            --max-width: 1180px;
+            --nav-bg: rgba(7,9,13,0.88);
+
+            --shadow:
+                0 30px 80px rgba(0,0,0,0.40);
+
+            --max-width: 1280px;
 
             --font-main: "Inter", sans-serif;
             --font-mono: "JetBrains Mono", monospace;
         }
 
 
-        /* =========================================
+        /* =====================================================
+           WHITE MODE
+        ===================================================== */
+
+        body.light-mode {
+
+            --bg: #f5f7fa;
+            --bg-soft: #ffffff;
+            --bg-card: rgba(0,0,0,0.025);
+
+            --border: rgba(10,20,30,0.12);
+            --border-hover: rgba(0,130,180,0.40);
+
+            --text: #10151c;
+            --text-soft: #505966;
+            --text-muted: #68717d;
+
+            --accent: #008bb8;
+            --accent-soft: rgba(0,139,184,0.09);
+
+            --green: #16a34a;
+
+            --nav-bg: rgba(245,247,250,0.90);
+
+            --shadow:
+                0 30px 80px rgba(20,30,40,0.10);
+        }
+
+
+        /* =====================================================
            RESET
-        ========================================= */
+        ===================================================== */
 
         * {
             margin: 0;
@@ -100,9 +121,13 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+
+            transition:
+                background 0.35s ease,
+                color 0.35s ease;
         }
 
-        body::selection {
+        ::selection {
             background: var(--accent);
             color: #000;
         }
@@ -121,9 +146,9 @@
         }
 
 
-        /* =========================================
-           BACKGROUND GRID
-        ========================================= */
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
 
         .background-grid {
             position: fixed;
@@ -144,27 +169,37 @@
 
             background-size: 55px 55px;
 
-            mask-image: linear-gradient(
-                to bottom,
-                black,
-                transparent 85%
-            );
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 85%
+                );
         }
 
-
-        /* =========================================
-           GLOW
-        ========================================= */
+        body.light-mode .background-grid {
+            background-image:
+                linear-gradient(
+                    rgba(0,0,0,0.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(0,0,0,0.035) 1px,
+                    transparent 1px
+                );
+        }
 
         .background-glow {
             position: fixed;
+
             width: 600px;
             height: 600px;
 
             top: -250px;
             right: -200px;
 
-            background: rgba(70, 190, 255, 0.08);
+            background: rgba(70,190,255,0.08);
 
             filter: blur(120px);
 
@@ -175,9 +210,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            CONTAINER
-        ========================================= */
+        ===================================================== */
 
         .container {
             width: min(
@@ -189,119 +224,187 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            NAVIGATION
-        ========================================= */
+        ===================================================== */
 
         .navbar {
             position: fixed;
+
             top: 0;
             left: 0;
             right: 0;
 
-            height: 76px;
+            height: 82px;
 
             display: flex;
             align-items: center;
 
             z-index: 1000;
 
-            background: rgba(7, 9, 13, 0.78);
+            background: var(--nav-bg);
 
-            backdrop-filter: blur(18px);
+            backdrop-filter: blur(20px);
 
-            border-bottom: 1px solid rgba(
-                255,
-                255,
-                255,
-                0.06
-            );
+            border-bottom:
+                1px solid var(--border);
+
+            transition:
+                background 0.35s ease,
+                border-color 0.35s ease;
         }
 
         .nav-container {
             width: min(
                 calc(100% - 48px),
-                var(--max-width)
+                1400px
             );
 
             margin: auto;
 
             display: flex;
             align-items: center;
-            justify-content: space-between;
+
+            gap: 30px;
         }
 
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
         .logo {
+            flex-shrink: 0;
+
             font-family: var(--font-mono);
+
             font-size: 1rem;
             font-weight: 600;
 
             letter-spacing: -0.04em;
+
+            white-space: nowrap;
         }
 
         .logo span {
             color: var(--accent);
         }
 
+
+        /* =====================================================
+           NAV TABS
+        ===================================================== */
+
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 34px;
+            justify-content: center;
+
+            gap: 8px;
 
             list-style: none;
+
+            flex: 1;
+        }
+
+        .nav-links li {
+            display: flex;
         }
 
         .nav-links a {
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 42px;
+
+            padding: 0 15px;
+
             color: var(--text-muted);
 
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
 
-            transition: 0.25s ease;
+            white-space: nowrap;
 
-            position: relative;
+            border: 1px solid transparent;
+            border-radius: 7px;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease;
         }
 
-        .nav-links a::before {
+        .nav-links a:hover {
+            color: var(--text);
+
+            background: var(--bg-card);
+
+            border-color: var(--border);
+
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            color: var(--text);
+
+            background: var(--accent-soft);
+
+            border-color:
+                rgba(105,220,255,0.20);
+        }
+
+        .nav-links a.active::after {
             content: "";
 
             position: absolute;
 
-            bottom: -8px;
-            left: 0;
+            left: 14px;
+            right: 14px;
+            bottom: -1px;
 
-            width: 0;
-            height: 1px;
+            height: 2px;
 
             background: var(--accent);
 
-            transition: width 0.25s ease;
+            border-radius: 10px;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--text);
-        }
 
-        .nav-links a:hover::before,
-        .nav-links a.active::before {
-            width: 100%;
+        /* =====================================================
+           RIGHT NAV
+        ===================================================== */
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            flex-shrink: 0;
         }
 
         .nav-socials {
             display: flex;
-            gap: 12px;
+            align-items: center;
+
+            gap: 8px;
         }
 
         .nav-socials a {
-            width: 34px;
-            height: 34px;
+            width: 35px;
+            height: 35px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             border: 1px solid var(--border);
+
             border-radius: 50%;
 
             color: var(--text-muted);
@@ -311,9 +414,50 @@
 
         .nav-socials a:hover {
             color: var(--accent);
+
             border-color: var(--border-hover);
+
             transform: translateY(-2px);
         }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+
+            border-radius: 50%;
+
+            background: var(--bg-card);
+
+            color: var(--text-muted);
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent);
+
+            border-color: var(--border-hover);
+
+            transform: rotate(15deg);
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
 
         .menu-toggle {
             display: none;
@@ -329,9 +473,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            HERO
-        ========================================= */
+        ===================================================== */
 
         .hero {
             min-height: 100vh;
@@ -339,7 +483,7 @@
             display: flex;
             align-items: center;
 
-            padding-top: 120px;
+            padding-top: 140px;
             padding-bottom: 100px;
         }
 
@@ -347,8 +491,8 @@
             display: grid;
 
             grid-template-columns:
-                minmax(0, 1.4fr)
-                minmax(300px, 0.8fr);
+                minmax(0,1.4fr)
+                minmax(300px,0.8fr);
 
             gap: 80px;
 
@@ -358,15 +502,19 @@
         .hero-eyebrow {
             display: flex;
             align-items: center;
+
             gap: 12px;
 
             margin-bottom: 28px;
 
             font-family: var(--font-mono);
+
             font-size: 0.72rem;
 
             color: var(--accent);
+
             text-transform: uppercase;
+
             letter-spacing: 0.12em;
         }
 
@@ -379,7 +527,7 @@
             border-radius: 50%;
 
             box-shadow:
-                0 0 12px rgba(74, 222, 128, 0.7);
+                0 0 12px rgba(74,222,128,0.7);
         }
 
         .hero h1 {
@@ -402,7 +550,7 @@
             color: transparent;
 
             -webkit-text-stroke:
-                1px rgba(255,255,255,0.55);
+                1px var(--text);
         }
 
         .hero-description {
@@ -424,9 +572,15 @@
             gap: 14px;
         }
 
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
         .btn {
             display: inline-flex;
             align-items: center;
+
             gap: 10px;
 
             padding: 13px 20px;
@@ -434,6 +588,7 @@
             border-radius: 7px;
 
             font-family: var(--font-mono);
+
             font-size: 0.76rem;
 
             transition:
@@ -454,32 +609,24 @@
             font-weight: 600;
         }
 
-        .btn-primary:hover {
-            background: #9be9ff;
-        }
-
         .btn-secondary {
             border: 1px solid var(--border);
 
             color: var(--text-soft);
 
-            background: rgba(
-                255,
-                255,
-                255,
-                0.02
-            );
+            background: var(--bg-card);
         }
 
         .btn-secondary:hover {
             color: var(--text);
+
             border-color: var(--border-hover);
         }
 
 
-        /* =========================================
-           HERO TERMINAL
-        ========================================= */
+        /* =====================================================
+           TERMINAL
+        ===================================================== */
 
         .terminal {
             border: 1px solid var(--border);
@@ -488,15 +635,9 @@
 
             overflow: hidden;
 
-            background: rgba(
-                10,
-                13,
-                18,
-                0.9
-            );
+            background: var(--bg-soft);
 
-            box-shadow:
-                0 30px 80px rgba(0,0,0,0.35);
+            box-shadow: var(--shadow);
         }
 
         .terminal-header {
@@ -513,6 +654,7 @@
 
         .terminal-controls {
             display: flex;
+
             gap: 7px;
         }
 
@@ -522,14 +664,14 @@
 
             border-radius: 50%;
 
-            background: #4d535c;
+            background: var(--text-muted);
         }
 
         .terminal-title {
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
 
             font-family: var(--font-mono);
+
             font-size: 0.62rem;
 
             color: var(--text-muted);
@@ -539,6 +681,7 @@
             padding: 26px;
 
             font-family: var(--font-mono);
+
             font-size: 0.76rem;
 
             line-height: 2;
@@ -553,27 +696,28 @@
         }
 
         .terminal-command {
-            color: #dce1e7;
+            color: var(--text);
         }
 
+        /* Brighter terminal output */
         .terminal-output {
-            color: var(--text-muted);
+            color: var(--text-soft);
         }
 
         .terminal-highlight {
-            color: #b9f1ff;
+            color: var(--accent);
         }
 
 
-        /* =========================================
+        /* =====================================================
            STATS
-        ========================================= */
+        ===================================================== */
 
         .stats {
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(4,1fr);
 
             gap: 1px;
 
@@ -613,9 +757,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            SECTIONS
-        ========================================= */
+        ===================================================== */
 
         section {
             padding: 120px 0;
@@ -671,16 +815,16 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            ABOUT
-        ========================================= */
+        ===================================================== */
 
         .about-profile {
             display: grid;
 
             grid-template-columns:
                 420px
-                minmax(0, 1fr);
+                minmax(0,1fr);
 
             gap: 80px;
 
@@ -700,11 +844,9 @@
 
             border-radius: 18px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
+            border: 1px solid var(--border);
 
-            background: #111;
+            background: var(--bg-soft);
 
             z-index: 2;
         }
@@ -721,12 +863,10 @@
 
             filter: saturate(0.92);
 
-            transition:
-                transform 0.6s ease;
+            transition: transform 0.6s ease;
         }
 
-        .profile-photo-frame:hover
-        .profile-photo {
+        .profile-photo-frame:hover .profile-photo {
             transform: scale(1.03);
         }
 
@@ -740,8 +880,7 @@
             left: 18px;
 
             border:
-                1px solid
-                rgba(105,220,255,0.3);
+                1px solid var(--border-hover);
 
             border-radius: 18px;
 
@@ -763,18 +902,15 @@
 
             padding: 10px 15px;
 
-            background:
-                rgba(10,12,18,0.88);
+            background: var(--bg-soft);
 
             backdrop-filter: blur(12px);
 
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
+            border: 1px solid var(--border);
 
             border-radius: 999px;
 
-            color: #e8e8e8;
+            color: var(--text);
 
             font-size: 0.75rem;
         }
@@ -788,8 +924,7 @@
             background: var(--green);
 
             box-shadow:
-                0 0 10px
-                rgba(74,222,128,0.7);
+                0 0 10px rgba(74,222,128,0.7);
         }
 
         .about-content {
@@ -803,7 +938,7 @@
 
             margin-bottom: 24px;
 
-            color: #f5f5f5;
+            color: var(--text);
         }
 
         .about-content > p:not(.about-intro) {
@@ -820,7 +955,7 @@
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(2,1fr);
 
             gap: 1px;
 
@@ -852,15 +987,15 @@
         }
 
         .detail-value {
-            color: #e9ebef;
+            color: var(--text);
 
             font-size: 0.9rem;
         }
 
 
-        /* =========================================
+        /* =====================================================
            LANGUAGES
-        ========================================= */
+        ===================================================== */
 
         .languages-block {
             margin-top: 45px;
@@ -874,7 +1009,7 @@
 
             margin-bottom: 20px;
 
-            color: #f2f2f2;
+            color: var(--text);
 
             font-size: 0.75rem;
 
@@ -888,15 +1023,14 @@
 
             flex: 1;
 
-            background:
-                rgba(255,255,255,0.1);
+            background: var(--border);
         }
 
         .language-list {
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(2,1fr);
 
             gap: 10px;
         }
@@ -909,26 +1043,21 @@
 
             padding: 13px 16px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.07);
+            border: 1px solid var(--border);
 
-            background:
-                rgba(255,255,255,0.025);
+            background: var(--bg-card);
 
             transition: 0.25s ease;
         }
 
         .language:hover {
-            border-color:
-                rgba(105,220,255,0.25);
+            border-color: var(--border-hover);
 
-            background:
-                rgba(105,220,255,0.035);
+            background: var(--accent-soft);
         }
 
         .language-name {
-            color: #dfe2e7;
+            color: var(--text);
 
             font-size: 0.86rem;
         }
@@ -946,15 +1075,15 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            SKILLS
-        ========================================= */
+        ===================================================== */
 
         .skills-grid {
             display: grid;
 
             grid-template-columns:
-                repeat(4, 1fr);
+                repeat(4,1fr);
 
             gap: 14px;
         }
@@ -966,9 +1095,7 @@
 
             min-height: 180px;
 
-            border:
-                1px solid
-                var(--border);
+            border: 1px solid var(--border);
 
             background: var(--bg-card);
 
@@ -997,11 +1124,9 @@
         .skill-card:hover {
             transform: translateY(-5px);
 
-            border-color:
-                rgba(105,220,255,0.25);
+            border-color: var(--border-hover);
 
-            background:
-                rgba(105,220,255,0.035);
+            background: var(--accent-soft);
         }
 
         .skill-card:hover::before {
@@ -1031,15 +1156,15 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            PROJECTS
-        ========================================= */
+        ===================================================== */
 
         .projects-grid {
             display: grid;
 
             grid-template-columns:
-                repeat(2, 1fr);
+                repeat(2,1fr);
 
             gap: 20px;
         }
@@ -1051,16 +1176,9 @@
 
             min-height: 330px;
 
-            border:
-                1px solid
-                var(--border);
+            border: 1px solid var(--border);
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.045),
-                    rgba(255,255,255,0.015)
-                );
+            background: var(--bg-card);
 
             overflow: hidden;
 
@@ -1082,8 +1200,7 @@
 
             border-radius: 50%;
 
-            background:
-                rgba(105,220,255,0.08);
+            background: var(--accent-soft);
 
             filter: blur(25px);
 
@@ -1093,8 +1210,7 @@
         .project-card:hover {
             transform: translateY(-6px);
 
-            border-color:
-                rgba(105,220,255,0.28);
+            border-color: var(--border-hover);
         }
 
         .project-card:hover::after {
@@ -1142,9 +1258,7 @@
         .project-tags span {
             padding: 6px 10px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
 
             color: var(--text-muted);
 
@@ -1154,9 +1268,155 @@
         }
 
 
-        /* =========================================
-           JOURNEY
-        ========================================= */
+        /* =====================================================
+           CERTIFICATIONS
+        ===================================================== */
+
+        .certifications-intro {
+            max-width: 700px;
+
+            color: var(--text-soft);
+
+            line-height: 1.8;
+
+            margin-bottom: 45px;
+
+            font-size: 0.95rem;
+        }
+
+        .certifications-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 18px;
+        }
+
+        .certification-card {
+            position: relative;
+
+            padding: 30px;
+
+            min-height: 250px;
+
+            border: 1px solid var(--border);
+
+            background: var(--bg-card);
+
+            transition: 0.3s ease;
+
+            overflow: hidden;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-6px);
+
+            border-color: var(--border-hover);
+
+            background: var(--accent-soft);
+        }
+
+        .certification-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background: var(--accent);
+
+            transform: scaleX(0);
+
+            transform-origin: left;
+
+            transition: transform 0.3s ease;
+        }
+
+        .certification-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .certification-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 25px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            color: var(--accent);
+
+            background: var(--accent-soft);
+
+            font-size: 1.1rem;
+        }
+
+        .certification-status {
+            display: inline-flex;
+
+            padding: 5px 9px;
+
+            margin-bottom: 12px;
+
+            border: 1px solid var(--border);
+
+            color: var(--text-muted);
+
+            font-family: var(--font-mono);
+
+            font-size: 0.58rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.08em;
+        }
+
+        .certification-card h3 {
+            font-size: 1.05rem;
+
+            margin-bottom: 9px;
+        }
+
+        .certification-card p {
+            color: var(--text-soft);
+
+            font-size: 0.78rem;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+        }
+
+        .certification-meta {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            color: var(--text-muted);
+
+            font-family: var(--font-mono);
+
+            font-size: 0.61rem;
+        }
+
+
+        /* =====================================================
+           TIMELINE
+        ===================================================== */
 
         .timeline {
             position: relative;
@@ -1173,12 +1433,12 @@
 
             top: 0;
             bottom: 0;
+
             left: 7px;
 
             width: 1px;
 
-            background:
-                rgba(255,255,255,0.1);
+            background: var(--border);
         }
 
         .timeline-item {
@@ -1207,12 +1467,10 @@
             background: var(--bg);
 
             border:
-                2px solid
-                var(--accent);
+                2px solid var(--accent);
 
             box-shadow:
-                0 0 12px
-                rgba(105,220,255,0.5);
+                0 0 12px rgba(105,220,255,0.5);
         }
 
         .timeline-date {
@@ -1232,7 +1490,7 @@
         }
 
         .timeline-item p {
-            color: var(--text-muted);
+            color: var(--text-soft);
 
             font-size: 0.84rem;
 
@@ -1240,9 +1498,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            CV
-        ========================================= */
+        ===================================================== */
 
         .cv-box {
             display: flex;
@@ -1254,16 +1512,9 @@
 
             padding: 45px;
 
-            border:
-                1px solid
-                var(--border);
+            border: 1px solid var(--border);
 
-            background:
-                linear-gradient(
-                    120deg,
-                    rgba(105,220,255,0.05),
-                    rgba(255,255,255,0.015)
-                );
+            background: var(--bg-card);
         }
 
         .cv-box h3 {
@@ -1273,7 +1524,7 @@
         }
 
         .cv-box p {
-            color: var(--text-muted);
+            color: var(--text-soft);
 
             font-size: 0.85rem;
         }
@@ -1287,16 +1538,15 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            CONTACT
-        ========================================= */
+        ===================================================== */
 
         .contact-layout {
             display: grid;
 
             grid-template-columns:
-                1fr
-                1fr;
+                1fr 1fr;
 
             gap: 80px;
 
@@ -1348,19 +1598,15 @@
 
             padding: 18px 20px;
 
-            border:
-                1px solid
-                var(--border);
+            border: 1px solid var(--border);
 
-            background:
-                rgba(255,255,255,0.02);
+            background: var(--bg-card);
 
             transition: 0.25s ease;
         }
 
         .contact-link:hover {
-            border-color:
-                rgba(105,220,255,0.3);
+            border-color: var(--border-hover);
 
             transform: translateX(5px);
         }
@@ -1370,12 +1616,11 @@
             height: 38px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            border:
-                1px solid
-                var(--border);
+            border: 1px solid var(--border);
 
             color: var(--accent);
 
@@ -1401,7 +1646,7 @@
         }
 
         .contact-link-value {
-            color: #e5e8ed;
+            color: var(--text);
 
             font-size: 0.82rem;
 
@@ -1409,16 +1654,15 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            FOOTER
-        ========================================= */
+        ===================================================== */
 
         footer {
             padding: 30px 0;
 
             border-top:
-                1px solid
-                rgba(255,255,255,0.07);
+                1px solid var(--border);
         }
 
         .footer-inner {
@@ -1430,20 +1674,13 @@
             gap: 20px;
         }
 
-        .footer-copy {
-            color: var(--text-muted);
-
-            font-family: var(--font-mono);
-
-            font-size: 0.65rem;
-        }
-
+        .footer-copy,
         .footer-tech {
             color: var(--text-muted);
 
-            font-size: 0.65rem;
-
             font-family: var(--font-mono);
+
+            font-size: 0.65rem;
         }
 
         .footer-tech span {
@@ -1451,9 +1688,9 @@
         }
 
 
-        /* =========================================
-           REVEAL ANIMATION
-        ========================================= */
+        /* =====================================================
+           REVEAL
+        ===================================================== */
 
         .reveal {
             opacity: 0;
@@ -1472,41 +1709,101 @@
         }
 
 
-        /* =========================================
-           RESPONSIVE
-        ========================================= */
+        /* =====================================================
+           LARGE DESKTOP
+        ===================================================== */
 
-        @media (max-width: 1050px) {
+        @media (min-width: 1450px) {
 
-            .hero-grid {
-                grid-template-columns: 1fr;
+            .nav-container {
+                width: min(
+                    calc(100% - 80px),
+                    1450px
+                );
             }
 
-            .terminal {
-                max-width: 700px;
+            .nav-links {
+                gap: 12px;
             }
 
-            .skills-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
+            .nav-links a {
+                min-height: 46px;
+
+                padding: 0 18px;
+
+                font-size: 0.7rem;
+            }
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .nav-container {
+                gap: 18px;
+            }
+
+            .nav-links {
+                gap: 4px;
+            }
+
+            .nav-links a {
+                padding: 0 10px;
+
+                font-size: 0.61rem;
+            }
+
+            .nav-socials {
+                display: none;
             }
 
             .about-profile {
                 grid-template-columns:
-                    350px
-                    1fr;
+                    350px 1fr;
 
                 gap: 55px;
             }
 
+            .certifications-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .skills-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
         }
 
 
-        @media (max-width: 850px) {
+        /* =====================================================
+           MOBILE NAV
+        ===================================================== */
 
-            .nav-links,
-            .nav-socials {
+        @media (max-width: 950px) {
+
+            .navbar {
+                height: 76px;
+            }
+
+            .nav-container {
+                width: min(
+                    calc(100% - 32px),
+                    var(--max-width)
+                );
+
+                gap: 12px;
+            }
+
+            .nav-links {
                 display: none;
+            }
+
+            .nav-right {
+                margin-left: auto;
             }
 
             .menu-toggle {
@@ -1519,20 +1816,60 @@
                 position: absolute;
 
                 top: 76px;
+
                 left: 0;
                 right: 0;
 
-                padding: 25px;
+                padding: 18px;
 
                 flex-direction: column;
-                align-items: flex-start;
 
-                background:
-                    rgba(7,9,13,0.97);
+                align-items: stretch;
+
+                gap: 6px;
+
+                background: var(--bg-soft);
 
                 border-bottom:
-                    1px solid
-                    var(--border);
+                    1px solid var(--border);
+
+                box-shadow:
+                    0 20px 40px
+                    rgba(0,0,0,0.15);
+            }
+
+            .nav-links.mobile-open li {
+                width: 100%;
+            }
+
+            .nav-links.mobile-open a {
+                width: 100%;
+
+                justify-content: flex-start;
+
+                min-height: 48px;
+
+                padding: 0 16px;
+
+                font-size: 0.72rem;
+            }
+
+            .nav-links.mobile-open a.active::after {
+                left: 16px;
+
+                right: auto;
+
+                width: 30px;
+
+                bottom: 5px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .terminal {
+                max-width: 700px;
             }
 
             .about-profile {
@@ -1556,18 +1893,17 @@
 
                 align-items: flex-start;
             }
-
         }
 
 
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
         @media (max-width: 650px) {
 
-            .container,
-            .nav-container {
-                width: min(
-                    calc(100% - 32px),
-                    var(--max-width)
-                );
+            .container {
+                width: calc(100% - 32px);
             }
 
             section {
@@ -1575,7 +1911,7 @@
             }
 
             .hero {
-                padding-top: 120px;
+                padding-top: 115px;
             }
 
             .hero h1 {
@@ -1588,7 +1924,7 @@
 
             .stats {
                 grid-template-columns:
-                    repeat(2, 1fr);
+                    repeat(2,1fr);
 
                 margin-top: 55px;
             }
@@ -1598,6 +1934,10 @@
             }
 
             .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .certifications-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1632,26 +1972,27 @@
 
                 align-items: flex-start;
             }
-
         }
 
     </style>
+
 </head>
 
 
 <body>
 
-    <!-- =========================================
+    <!-- =====================================================
          BACKGROUND
-    ========================================== -->
+    ===================================================== -->
 
     <div class="background-grid"></div>
+
     <div class="background-glow"></div>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          NAVIGATION
-    ========================================== -->
+    ===================================================== -->
 
     <header class="navbar">
 
@@ -1689,8 +2030,20 @@
                 </li>
 
                 <li>
+                    <a href="#certifications">
+                        Certifications
+                    </a>
+                </li>
+
+                <li>
                     <a href="#journey">
                         Journey
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#cv">
+                        CV
                     </a>
                 </li>
 
@@ -1703,52 +2056,68 @@
             </ul>
 
 
-            <div class="nav-socials">
+            <div class="nav-right">
 
-                <a
-                    href="https://github.com/GonRa748"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub"
-                >
-                    <i class="fa-brands fa-github"></i>
-                </a>
+                <div class="nav-socials">
 
-                <a
-                    href="https://www.linkedin.com/in/rafael-gon%C3%A7alves-fernandes-180b5832b/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
+                    <a
+                        href="https://github.com/GonRa748"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                    >
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a
+                        href="https://www.linkedin.com/in/rafael-gon%C3%A7alves-fernandes-180b5832b/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                    >
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                </div>
+
+
+                <button
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch theme"
                 >
-                    <i class="fa-brands fa-linkedin-in"></i>
-                </a>
+                    <i
+                        class="fa-solid fa-sun"
+                        id="themeIcon"
+                    ></i>
+                </button>
+
+
+                <button
+                    class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Open navigation menu"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
 
             </div>
-
-
-            <button
-                class="menu-toggle"
-                id="menuToggle"
-                aria-label="Open navigation menu"
-            >
-                <i class="fa-solid fa-bars"></i>
-            </button>
 
         </div>
 
     </header>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          MAIN
-    ========================================== -->
+    ===================================================== -->
 
     <main>
 
 
-        <!-- =====================================
-             HERO
-        ====================================== -->
+        <!-- =================================================
+             HOME
+        ================================================== -->
 
         <section id="home" class="hero">
 
@@ -1777,10 +2146,13 @@
 
 
                         <p class="hero-description">
-                            I'm Rafael Gonçalves Fernandes, a Cloud Computing
-                            student interested in cloud infrastructure,
-                            networking, cybersecurity, Linux and software
+
+                            I'm Rafael Gonçalves Fernandes,
+                            a Cloud Computing student interested
+                            in cloud infrastructure, networking,
+                            cybersecurity, Linux and software
                             development.
+
                         </p>
 
 
@@ -1791,6 +2163,7 @@
                                 class="btn btn-primary"
                             >
                                 View my projects
+
                                 <i class="fa-solid fa-arrow-down"></i>
                             </a>
 
@@ -1800,6 +2173,7 @@
                                 class="btn btn-secondary"
                             >
                                 Get in touch
+
                                 <i class="fa-regular fa-paper-plane"></i>
                             </a>
 
@@ -1830,6 +2204,7 @@
                         <div class="terminal-body">
 
                             <span class="terminal-line">
+
                                 <span class="terminal-prompt">
                                     rafael@cloud:~$
                                 </span>
@@ -1837,16 +2212,20 @@
                                 <span class="terminal-command">
                                     whoami
                                 </span>
+
                             </span>
+
 
                             <span class="terminal-line terminal-output">
                                 Rafael Gonçalves Fernandes
                             </span>
 
+
                             <br>
 
 
                             <span class="terminal-line">
+
                                 <span class="terminal-prompt">
                                     rafael@cloud:~$
                                 </span>
@@ -1854,7 +2233,9 @@
                                 <span class="terminal-command">
                                     cat interests.txt
                                 </span>
+
                             </span>
+
 
                             <span class="terminal-line terminal-output">
                                 cloud infrastructure
@@ -1876,10 +2257,12 @@
                                 software development
                             </span>
 
+
                             <br>
 
 
                             <span class="terminal-line">
+
                                 <span class="terminal-prompt">
                                     rafael@cloud:~$
                                 </span>
@@ -1887,17 +2270,23 @@
                                 <span class="terminal-command">
                                     languages
                                 </span>
+
                             </span>
 
+
                             <span class="terminal-line terminal-highlight">
+
                                 Portuguese / French / German /
                                 English / Luxembourgish
+
                             </span>
+
 
                             <br>
 
 
                             <span class="terminal-line">
+
                                 <span class="terminal-prompt">
                                     rafael@cloud:~$
                                 </span>
@@ -1905,7 +2294,9 @@
                                 <span class="terminal-command">
                                     status
                                 </span>
+
                             </span>
+
 
                             <span class="terminal-line terminal-highlight">
                                 learning...
@@ -1923,6 +2314,7 @@
                 <div class="stats reveal">
 
                     <div class="stat">
+
                         <span class="stat-number">
                             02
                         </span>
@@ -1930,10 +2322,12 @@
                         <span class="stat-label">
                             Projects
                         </span>
+
                     </div>
 
 
                     <div class="stat">
+
                         <span class="stat-number">
                             08+
                         </span>
@@ -1941,10 +2335,12 @@
                         <span class="stat-label">
                             Technologies
                         </span>
+
                     </div>
 
 
                     <div class="stat">
+
                         <span class="stat-number">
                             05
                         </span>
@@ -1952,10 +2348,12 @@
                         <span class="stat-label">
                             Languages
                         </span>
+
                     </div>
 
 
                     <div class="stat">
+
                         <span class="stat-number">
                             ∞
                         </span>
@@ -1963,6 +2361,7 @@
                         <span class="stat-label">
                             Curiosity
                         </span>
+
                     </div>
 
                 </div>
@@ -1973,9 +2372,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              ABOUT
-        ====================================== -->
+        ================================================== -->
 
         <section id="about">
 
@@ -2005,9 +2404,6 @@
 
                 <div class="about-profile reveal">
 
-
-                    <!-- PHOTO -->
-
                     <div class="profile-photo-wrapper">
 
                         <div class="profile-photo-frame">
@@ -2035,8 +2431,6 @@
                     </div>
 
 
-                    <!-- ABOUT CONTENT -->
-
                     <div class="about-content">
 
                         <p class="about-intro">
@@ -2045,32 +2439,32 @@
                             <strong>
                                 Rafael Gonçalves Fernandes
                             </strong>,
-                            a Cloud Computing student based in Luxembourg
-                            with a strong interest in technology,
-                            infrastructure and cybersecurity.
+                            a Cloud Computing student based in
+                            Luxembourg with a strong interest in
+                            technology, infrastructure and
+                            cybersecurity.
 
                         </p>
 
 
                         <p>
-                            I'm interested in understanding how modern IT
-                            systems work — from cloud infrastructure and
-                            networking to Linux systems, security and
-                            software development.
+
+                            I'm interested in understanding how
+                            modern IT systems work — from cloud
+                            infrastructure and networking to Linux
+                            systems, security and software development.
+
                         </p>
 
 
                         <p>
-                            I enjoy learning by building practical projects
-                            and exploring technologies that allow me to
-                            develop my technical skills. My goal is to
-                            continue growing in the IT and cloud computing
-                            field while gaining real-world professional
-                            experience.
+
+                            I enjoy learning by building practical
+                            projects and exploring technologies that
+                            allow me to develop my technical skills.
+
                         </p>
 
-
-                        <!-- DETAILS -->
 
                         <div class="about-details">
 
@@ -2127,8 +2521,6 @@
 
                         </div>
 
-
-                        <!-- LANGUAGES -->
 
                         <div class="languages-block">
 
@@ -2223,9 +2615,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              SKILLS
-        ====================================== -->
+        ================================================== -->
 
         <section id="skills">
 
@@ -2376,7 +2768,7 @@
 
                         <p>
                             Building responsive websites using
-                            modern HTML, CSS and JavaScript.
+                            HTML, CSS and JavaScript.
                         </p>
 
                     </div>
@@ -2407,9 +2799,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              PROJECTS
-        ====================================== -->
+        ================================================== -->
 
         <section id="projects">
 
@@ -2440,8 +2832,6 @@
                 <div class="projects-grid">
 
 
-                    <!-- PROJECT 01 -->
-
                     <article class="project-card reveal">
 
                         <div class="project-number">
@@ -2453,32 +2843,24 @@
                         </h3>
 
                         <p>
-                            A football-themed game project focused on
-                            programming logic, interaction and creating
-                            an engaging user experience.
+                            A football-themed game project focused
+                            on programming logic, interaction and
+                            creating an engaging user experience.
                         </p>
 
 
                         <div class="project-tags">
 
-                            <span>
-                                Python
-                            </span>
+                            <span>Python</span>
 
-                            <span>
-                                Game Development
-                            </span>
+                            <span>Game Development</span>
 
-                            <span>
-                                Programming
-                            </span>
+                            <span>Programming</span>
 
                         </div>
 
                     </article>
 
-
-                    <!-- PROJECT 02 -->
 
                     <article class="project-card reveal">
 
@@ -2492,27 +2874,171 @@
 
                         <p>
                             A private cloud project focused on
-                            self-hosted infrastructure, file management,
-                            networking and cloud services.
+                            self-hosted infrastructure, file
+                            management, networking and cloud services.
                         </p>
 
 
                         <div class="project-tags">
 
+                            <span>Nextcloud</span>
+
+                            <span>Linux</span>
+
+                            <span>Networking</span>
+
+                            <span>Cloud</span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CERTIFICATIONS
+        ================================================== -->
+
+        <section id="certifications">
+
+            <div class="container">
+
+                <div class="section-header reveal">
+
+                    <span class="section-number">
+                        04
+                    </span>
+
+                    <div>
+
+                        <p class="section-label">
+                            Certifications
+                        </p>
+
+                        <h2>
+                            Knowledge backed by
+                            <span>credentials.</span>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="certifications-intro reveal">
+
+                    A collection of certifications and professional
+                    credentials that document my learning and
+                    development in technology, cloud computing and IT.
+
+                </p>
+
+
+                <div class="certifications-grid">
+
+
+                    <article class="certification-card reveal">
+
+                        <div class="certification-icon">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+
+                        <div class="certification-status">
+                            Add certification
+                        </div>
+
+                        <h3>
+                            Your Certification
+                        </h3>
+
+                        <p>
+                            Add the name of your certification,
+                            certificate provider and a short
+                            description here.
+                        </p>
+
+                        <div class="certification-meta">
+
                             <span>
-                                Nextcloud
+                                Provider
                             </span>
 
                             <span>
-                                Linux
+                                YEAR
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="certification-card reveal">
+
+                        <div class="certification-icon">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+
+                        <div class="certification-status">
+                            Add certification
+                        </div>
+
+                        <h3>
+                            Cloud Certification
+                        </h3>
+
+                        <p>
+                            Add your cloud-related certification
+                            and include the issuing organization.
+                        </p>
+
+                        <div class="certification-meta">
+
+                            <span>
+                                Provider
                             </span>
 
                             <span>
-                                Networking
+                                YEAR
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="certification-card reveal">
+
+                        <div class="certification-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div class="certification-status">
+                            Add certification
+                        </div>
+
+                        <h3>
+                            IT / Security Certification
+                        </h3>
+
+                        <p>
+                            Add a cybersecurity, networking or
+                            IT certification here.
+                        </p>
+
+                        <div class="certification-meta">
+
+                            <span>
+                                Provider
                             </span>
 
                             <span>
-                                Cloud
+                                YEAR
                             </span>
 
                         </div>
@@ -2527,9 +3053,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              JOURNEY
-        ====================================== -->
+        ================================================== -->
 
         <section id="journey">
 
@@ -2538,7 +3064,7 @@
                 <div class="section-header reveal">
 
                     <span class="section-number">
-                        04
+                        05
                     </span>
 
                     <div>
@@ -2573,9 +3099,10 @@
                         </h3>
 
                         <p>
-                            Developing knowledge across cloud computing,
-                            infrastructure, networking, Linux,
-                            cybersecurity and software development.
+                            Developing knowledge across cloud
+                            computing, infrastructure, networking,
+                            Linux, cybersecurity and software
+                            development.
                         </p>
 
                     </div>
@@ -2650,9 +3177,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              CV
-        ====================================== -->
+        ================================================== -->
 
         <section id="cv">
 
@@ -2661,7 +3188,7 @@
                 <div class="section-header reveal">
 
                     <span class="section-number">
-                        05
+                        06
                     </span>
 
                     <div>
@@ -2702,6 +3229,7 @@
                             class="btn btn-primary"
                             target="_blank"
                         >
+
                             <i class="fa-solid fa-file-pdf"></i>
 
                             English CV
@@ -2714,6 +3242,7 @@
                             class="btn btn-secondary"
                             target="_blank"
                         >
+
                             <i class="fa-solid fa-file-pdf"></i>
 
                             French CV
@@ -2730,9 +3259,9 @@
 
 
 
-        <!-- =====================================
+        <!-- =================================================
              CONTACT
-        ====================================== -->
+        ================================================== -->
 
         <section id="contact">
 
@@ -2741,7 +3270,7 @@
                 <div class="section-header reveal">
 
                     <span class="section-number">
-                        06
+                        07
                     </span>
 
                     <div>
@@ -2766,16 +3295,22 @@
                     <div class="reveal">
 
                         <h3 class="contact-heading">
+
                             Have an idea?
                             <br>
+
                             Let's talk<span>.</span>
+
                         </h3>
 
 
                         <p class="contact-description">
-                            I'm interested in learning, collaborating
-                            and discovering new opportunities in IT,
-                            cloud computing and technology.
+
+                            I'm interested in learning,
+                            collaborating and discovering new
+                            opportunities in IT, cloud computing
+                            and technology.
+
                         </p>
 
                     </div>
@@ -2784,16 +3319,17 @@
                     <div class="contact-links reveal">
 
 
-                        <!-- EMAIL -->
-
                         <a
                             href="mailto:GonRa748@school.lu"
                             class="contact-link"
                         >
 
                             <div class="contact-link-icon">
+
                                 <i class="fa-regular fa-envelope"></i>
+
                             </div>
+
 
                             <div class="contact-link-info">
 
@@ -2810,8 +3346,6 @@
                         </a>
 
 
-                        <!-- GITHUB -->
-
                         <a
                             href="https://github.com/GonRa748"
                             target="_blank"
@@ -2820,8 +3354,11 @@
                         >
 
                             <div class="contact-link-icon">
+
                                 <i class="fa-brands fa-github"></i>
+
                             </div>
+
 
                             <div class="contact-link-info">
 
@@ -2838,8 +3375,6 @@
                         </a>
 
 
-                        <!-- LINKEDIN -->
-
                         <a
                             href="https://www.linkedin.com/in/rafael-gon%C3%A7alves-fernandes-180b5832b/"
                             target="_blank"
@@ -2848,8 +3383,11 @@
                         >
 
                             <div class="contact-link-icon">
+
                                 <i class="fa-brands fa-linkedin-in"></i>
+
                             </div>
+
 
                             <div class="contact-link-info">
 
@@ -2877,9 +3415,9 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
+    ===================================================== -->
 
     <footer>
 
@@ -2892,11 +3430,14 @@
                 </div>
 
                 <div class="footer-tech">
+
                     Built with
+
                     <span>HTML</span>,
                     <span>CSS</span>
                     &amp;
                     <span>JavaScript</span>
+
                 </div>
 
             </div>
@@ -2907,21 +3448,22 @@
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          JAVASCRIPT
-    ========================================== -->
+    ===================================================== -->
 
     <script>
 
-        /* =========================================
+        /* =====================================================
            MOBILE MENU
-        ========================================== */
+        ===================================================== */
 
         const menuToggle =
             document.getElementById("menuToggle");
 
         const navLinks =
             document.getElementById("navLinks");
+
 
         menuToggle.addEventListener(
             "click",
@@ -2931,8 +3473,10 @@
                     "mobile-open"
                 );
 
+
                 const icon =
                     menuToggle.querySelector("i");
+
 
                 if (
                     navLinks.classList.contains(
@@ -2964,9 +3508,9 @@
         );
 
 
-        /* =========================================
+        /* =====================================================
            CLOSE MOBILE MENU
-        ========================================== */
+        ===================================================== */
 
         document
             .querySelectorAll(".nav-links a")
@@ -2980,8 +3524,10 @@
                             "mobile-open"
                         );
 
+
                         const icon =
                             menuToggle.querySelector("i");
+
 
                         icon.classList.remove(
                             "fa-xmark"
@@ -2997,36 +3543,135 @@
             });
 
 
-        /* =========================================
+        /* =====================================================
+           THEME SWITCH
+        ===================================================== */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const themeIcon =
+            document.getElementById("themeIcon");
+
+
+        function updateThemeIcon() {
+
+            if (
+                document.body.classList.contains(
+                    "light-mode"
+                )
+            ) {
+
+                themeIcon.className =
+                    "fa-solid fa-moon";
+
+                themeToggle.title =
+                    "Switch to black mode";
+
+                themeToggle.setAttribute(
+                    "aria-label",
+                    "Switch to black mode"
+                );
+
+            } else {
+
+                themeIcon.className =
+                    "fa-solid fa-sun";
+
+                themeToggle.title =
+                    "Switch to white mode";
+
+                themeToggle.setAttribute(
+                    "aria-label",
+                    "Switch to white mode"
+                );
+
+            }
+
+        }
+
+
+        const savedTheme =
+            localStorage.getItem(
+                "rafael-theme"
+            );
+
+
+        if (
+            savedTheme === "light"
+        ) {
+
+            document.body.classList.add(
+                "light-mode"
+            );
+
+        }
+
+
+        updateThemeIcon();
+
+
+        themeToggle.addEventListener(
+            "click",
+            () => {
+
+                document.body.classList.toggle(
+                    "light-mode"
+                );
+
+
+                const isLight =
+                    document.body.classList.contains(
+                        "light-mode"
+                    );
+
+
+                localStorage.setItem(
+                    "rafael-theme",
+                    isLight
+                        ? "light"
+                        : "dark"
+                );
+
+
+                updateThemeIcon();
+
+            }
+        );
+
+
+        /* =====================================================
            SCROLL REVEAL
-        ========================================== */
+        ===================================================== */
 
         const revealElements =
-            document.querySelectorAll(".reveal");
+            document.querySelectorAll(
+                ".reveal"
+            );
+
 
         const revealObserver =
             new IntersectionObserver(
-                (entries) => {
+                entries => {
 
-                    entries.forEach(
-                        entry => {
+                    entries.forEach(entry => {
 
-                            if (
-                                entry.isIntersecting
-                            ) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-                                entry.target.classList.add(
-                                    "visible"
-                                );
+                            entry.target.classList.add(
+                                "visible"
+                            );
 
-                                revealObserver.unobserve(
-                                    entry.target
-                                );
 
-                            }
+                            revealObserver.unobserve(
+                                entry.target
+                            );
 
                         }
-                    );
+
+                    });
 
                 },
                 {
@@ -3035,25 +3680,24 @@
             );
 
 
-        revealElements.forEach(
-            element => {
+        revealElements.forEach(element => {
 
-                revealObserver.observe(
-                    element
-                );
+            revealObserver.observe(
+                element
+            );
 
-            }
-        );
+        });
 
 
-        /* =========================================
+        /* =====================================================
            ACTIVE NAVIGATION
-        ========================================== */
+        ===================================================== */
 
         const sections =
             document.querySelectorAll(
                 "section[id]"
             );
+
 
         const navigationLinks =
             document.querySelectorAll(
@@ -3063,45 +3707,42 @@
 
         const navObserver =
             new IntersectionObserver(
-                (entries) => {
+                entries => {
 
-                    entries.forEach(
-                        entry => {
+                    entries.forEach(entry => {
 
-                            if (
-                                entry.isIntersecting
-                            ) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-                                navigationLinks
-                                    .forEach(
-                                        link => {
+                            navigationLinks.forEach(
+                                link => {
 
-                                            link.classList.remove(
-                                                "active"
-                                            );
-
-                                        }
-                                    );
-
-
-                                const activeLink =
-                                    document.querySelector(
-                                        `.nav-links a[href="#${entry.target.id}"]`
-                                    );
-
-
-                                if (activeLink) {
-
-                                    activeLink.classList.add(
+                                    link.classList.remove(
                                         "active"
                                     );
 
                                 }
+                            );
+
+
+                            const activeLink =
+                                document.querySelector(
+                                    `.nav-links a[href="#${entry.target.id}"]`
+                                );
+
+
+                            if (activeLink) {
+
+                                activeLink.classList.add(
+                                    "active"
+                                );
 
                             }
 
                         }
-                    );
+
+                    });
 
                 },
                 {
@@ -3111,28 +3752,28 @@
             );
 
 
-        sections.forEach(
-            section => {
+        sections.forEach(section => {
 
-                navObserver.observe(
-                    section
-                );
+            navObserver.observe(
+                section
+            );
 
-            }
-        );
+        });
 
 
-        /* =========================================
+        /* =====================================================
            CURRENT YEAR
-        ========================================== */
+        ===================================================== */
 
         const currentYear =
             new Date().getFullYear();
+
 
         const footerCopy =
             document.querySelector(
                 ".footer-copy"
             );
+
 
         if (footerCopy) {
 
@@ -3144,4 +3785,5 @@
     </script>
 
 </body>
+
 </html>
